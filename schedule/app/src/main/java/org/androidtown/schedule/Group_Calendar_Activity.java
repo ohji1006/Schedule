@@ -377,7 +377,7 @@ public class Group_Calendar_Activity extends AppCompatActivity implements Naviga
                 startActivity(g);
                 break;
             case R.id.nav_setting:
-                Intent s = new Intent(Group_Calendar_Activity.this, ProfileActivity.class);
+                Intent s = new Intent(Group_Calendar_Activity.this, SettingActivity.class);
                 s.putExtra("uid", uid);
                 startActivity(s);
                 break;

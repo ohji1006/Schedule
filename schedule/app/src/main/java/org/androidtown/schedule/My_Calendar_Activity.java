@@ -290,7 +290,7 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
                 startActivity(g);
                 break;
             case R.id.nav_setting:
-                Intent s = new Intent(My_Calendar_Activity.this, ProfileActivity.class);
+                Intent s = new Intent(My_Calendar_Activity.this, SettingActivity.class);
                 s.putExtra("uid", uid);
                 startActivity(s);
                 break;
