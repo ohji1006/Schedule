@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="org.androidtown.schedule.Group_Calendar_Activity">
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/group_calander"
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:mcv_selectionColor="#a9dbf0cb"
+            app:mcv_showOtherDates="defaults"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/my_calander_multiple_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="16dp">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_chat" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add_vote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_schedule" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/vote_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_icon="@drawable/ic_list" />
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/app_bar_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_second"
+        app:menu="@menu/activity_second_drawer" />
+
+</android.support.v4.widget.DrawerLayout>
