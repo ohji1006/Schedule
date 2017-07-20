@@ -21,7 +21,7 @@
         <activity android:name=".LoginActivity"></activity>
         <activity
             android:name=".SecondActivity"
-            android:label="@string/title_activity_temp_login"
+            android:label="D-day 7"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SecTempLoginActivity" />
         <activity
@@ -40,7 +40,7 @@
         <activity android:name=".Group_Calendar_Selected_Day_Shedule_Activity" />
         <activity
             android:name=".Show_groups_Activity"
-            android:label="Group List" />
+            android:label="Team List" />
         <activity android:name=".Group_chat_room_activity" />
         <activity
             android:name=".SettingActivity"

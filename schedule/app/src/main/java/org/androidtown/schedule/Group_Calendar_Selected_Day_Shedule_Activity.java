@@ -43,7 +43,7 @@ public class Group_Calendar_Selected_Day_Shedule_Activity extends AppCompatActiv
 
         setTitle(Tyear+ " 년 "+ Tmonth+ " 월 " + Tday + " 일 ");
 
-        Toast.makeText(this, uid + " :: " + Tyear+": " + Tmonth+ " : "+ Tday,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, uid + " :: " + Tyear+": " + Tmonth+ " : "+ Tday,Toast.LENGTH_SHORT).show();
         // 제대로 받아 온지 테스트
 
         adapter = new ScheduleViewAdapter(true);
@@ -54,13 +54,14 @@ public class Group_Calendar_Selected_Day_Shedule_Activity extends AppCompatActiv
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id)
             {
-                Toast.makeText(Group_Calendar_Selected_Day_Shedule_Activity.this, "position: "+position+", id:"+ id,Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(Group_Calendar_Selected_Day_Shedule_Activity.this, "position: "+position+", id:"+ id,Toast.LENGTH_SHORT).show();
 
                 Intent show_schedule_intent = new Intent(Group_Calendar_Selected_Day_Shedule_Activity.this, Show_schedule_activity.class);
 
                 //리스트 뷰 클릭시 해당 스케쥴 상세 보임 액티비티로 이동
                 show_schedule_intent.putExtra("schedule", (Schedule) adapter.getItem(position) );
                 startActivity(show_schedule_intent);
+                finish();
             }
         });
         // 리스트 뷰에 어댑터 셋

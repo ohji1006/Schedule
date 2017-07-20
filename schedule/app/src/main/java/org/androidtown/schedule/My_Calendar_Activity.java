@@ -2,16 +2,12 @@ package org.androidtown.schedule;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import java.util.Calendar;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,6 +39,7 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Random;
@@ -94,7 +90,7 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
         //uid = intent.getStringExtra("id");
         name  = "user" + new Random().nextInt(10000);
 
-        Toast.makeText(this, uid+"",Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, uid+"",Toast.LENGTH_SHORT).show();
         materialCalendarView = (MaterialCalendarView)findViewById(R.id.my_calander);
         floatingActionButton1 = (FloatingActionButton) findViewById(R.id.add_schedule);
 
@@ -125,7 +121,7 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                Toast.makeText(My_Calendar_Activity.this, ""+date.getYear()+":"+date.getMonth()+":"+date.getDay(),Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(My_Calendar_Activity.this, ""+date.getYear()+":"+date.getMonth()+":"+date.getDay(),Toast.LENGTH_SHORT).show();
                 //테스트 하기위해
 
                 Intent selected_Day_Shedule_intent = new Intent(My_Calendar_Activity.this, My_Calendar_Selected_Day_Shedule.class);
@@ -179,7 +175,7 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
                 //넣기전에 초기화
                 if(dataSnapshot.getValue() == null)
                 {
-                    Toast.makeText(My_Calendar_Activity.this, "there is no name: auto name get!",Toast.LENGTH_LONG).show();
+               //     Toast.makeText(My_Calendar_Activity.this, "there is no name: auto name get!",Toast.LENGTH_LONG).show();
                     databaseReference.child("Users").child(uid).child("name").setValue(name);
                 }
                 else
@@ -229,8 +225,8 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
                     shedule_title = shedule_title_edit.getText().toString();
                     shedule_body = shedule_body_edit.getText().toString();
 
-                    Toast toast2 = Toast.makeText(My_Calendar_Activity.this, "title: " + shedule_title + ", body: " + shedule_body ,Toast.LENGTH_SHORT);
-                    toast2.show();
+                   // Toast toast2 = Toast.makeText(My_Calendar_Activity.this, "title: " + shedule_title + ", body: " + shedule_body ,Toast.LENGTH_SHORT);
+                   // toast2.show();
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                             My_Calendar_Activity.this);
@@ -264,7 +260,7 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
                                  //   AM.set(AlarmManager.RTC_WAKEUP, t.getTime(), ServicePending);
                                     AM.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), ServicePending);
 
-                                    Toast.makeText(getBaseContext(), "5초뒤에 알람", Toast.LENGTH_SHORT).show();
+                                 //   Toast.makeText(getBaseContext(), "5초뒤에 알람", Toast.LENGTH_SHORT).show();
 
                                     push_schedule_to_firebase(year,month, day, hour, minute ,shedule_title,shedule_body,uid,name);
                                 }
@@ -297,8 +293,10 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
     public void push_schedule_to_firebase(int year, int mounth, int day, int hour, int minute, String title, String body, String uid, String name)
     {
         Schedule schedule = new Schedule(year,month, day, hour, minute ,shedule_title,shedule_body,uid,name );
-        databaseReference.child("Users").child(uid).child("schedule").push().setValue(schedule);
+        String key = databaseReference.child("Users").child(uid).child("schedule").push().getKey();
+        schedule.setHashkey( key);
 
+        databaseReference.child("Users").child(uid).child("schedule").child(key).setValue( schedule);
     }
 
 

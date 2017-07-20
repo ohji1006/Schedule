@@ -49,7 +49,7 @@ public class My_Calendar_Selected_Day_Shedule extends AppCompatActivity {
 
         setTitle(Tyear+ " 년 "+ Tmonth+ " 월 " + Tday + " 일 ");
 
-        Toast.makeText(this, uid + " :: " + Tyear+": " + Tmonth+ " : "+ Tday,Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, uid + " :: " + Tyear+": " + Tmonth+ " : "+ Tday,Toast.LENGTH_SHORT).show();
         // 제대로 받아 온지 테스트
 
         adapter = new ScheduleViewAdapter();
@@ -70,13 +70,14 @@ public class My_Calendar_Selected_Day_Shedule extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(My_Calendar_Selected_Day_Shedule.this,"position: "+position+", id:"+ id,Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(My_Calendar_Selected_Day_Shedule.this,"position: "+position+", id:"+ id,Toast.LENGTH_SHORT).show();
 
                 Intent show_schedule_intent = new Intent(My_Calendar_Selected_Day_Shedule.this, Show_schedule_activity.class);
                 show_schedule_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                 show_schedule_intent.putExtra("schedule", (Schedule) adapter.getItem(position) );
                 startActivity(show_schedule_intent);
+                finish();
             }
         });
         // 리스트 뷰에 어댑터 셋

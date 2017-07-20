@@ -38,20 +38,20 @@
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="닉네임을 입력하세요" />
+                android:hint="Enter nickname !!" />
 
             <Button
                 android:id="@+id/buttonSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="COPLETE" />
+                android:text="COMPLETE" />
 
             <EditText
                 android:id="@+id/groupJoin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="그룹명을 입력하세요" />
+                android:hint="Enter Team name !!" />
 
             <Button
                 android:id="@+id/join_button"
@@ -63,7 +63,7 @@
                 android:id="@+id/editTextAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="연락처를 입력하세요" />
+                android:hint="Enter address !!" />
 
             <Button
                 android:id="@+id/deleteuser"

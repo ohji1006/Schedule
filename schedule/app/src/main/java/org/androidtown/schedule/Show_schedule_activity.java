@@ -47,12 +47,16 @@ public class Show_schedule_activity extends Activity {
         from_where = intent.getIntExtra("from_where", 0);
 
         TextView show_shedule_title = (TextView) findViewById(R.id.Title);
-        TextView show_schedule_desc = (TextView) findViewById(R.id.s_shedule_desc);
+        final TextView show_schedule_desc = (TextView) findViewById(R.id.s_shedule_desc);
         TextView show_schedule_time = (TextView) findViewById(R.id.s_shedule_time);
         TextView show_schedule_group = (TextView) findViewById(R.id.s_shedule_group);
+
         ImageView image1 = (ImageView) findViewById(R.id.Image_desc);
         ImageView image2 = (ImageView) findViewById(R.id.Image_date);
         ImageView image3 = (ImageView) findViewById(R.id.Image_group);
+
+        Button del_button = (Button) findViewById(R.id.but_delete);
+        Button mod_button = (Button) findViewById(R.id.but_modify);
 
         show_shedule_title.setText(schedule.getTitle());
         show_schedule_desc.setText(schedule.getBody());
@@ -61,8 +65,24 @@ public class Show_schedule_activity extends Activity {
         image1.setImageResource(R.drawable.content);
         image2.setImageResource(R.drawable.chronometer);
         image3.setImageResource(R.drawable.group);
+
         String timeStr = String.format("%d.%d.%d  %d:%2d", schedule.getDay(), schedule.getMounth()+1,
                 schedule.getYear(), schedule.getHour(), schedule.getMinute());
         show_schedule_time.setText( timeStr);
+
+        del_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                databaseReference.child("Users").child(schedule.getUid()).child("schedule").child(schedule.getHashkey()).removeValue();
+                finish();
+            }
+        });
+
+        mod_button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+            }
+        });
     }
 }

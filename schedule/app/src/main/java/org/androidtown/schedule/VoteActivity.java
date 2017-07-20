@@ -63,7 +63,7 @@ public class VoteActivity extends AppCompatActivity
         gid = intent.getStringExtra("gid");
         uid = intent.getStringExtra("uid");
 
-        Toast.makeText(this, "gid: " + gid , Toast.LENGTH_SHORT).show();;
+      //  Toast.makeText(this, "gid: " + gid , Toast.LENGTH_SHORT).show();;
         listView = (ListView) findViewById(R.id.vote_listView);
         //listView.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 
@@ -102,7 +102,7 @@ public class VoteActivity extends AppCompatActivity
             public void onDataChange(DataSnapshot dataSnapshot)
             {
                 member_count = (int)dataSnapshot.getChildrenCount();
-                Toast.makeText(VoteActivity.this, "Member_cout : "+ member_count,Toast.LENGTH_SHORT).show();
+           //     Toast.makeText(VoteActivity.this, "Member_cout : "+ member_count,Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -114,7 +114,7 @@ public class VoteActivity extends AppCompatActivity
     {
         public void onItemClick(AdapterView<?> adapterView, View clickedView, int pos, long id)
         {
-            Toast.makeText(VoteActivity.this, "position: "+position+", id:"+ id,Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(VoteActivity.this, "position: "+position+", id:"+ id,Toast.LENGTH_SHORT).show();
 
             Intent show_schedule_intent = new Intent(VoteActivity.this, Show_schedule_activity.class);
 
@@ -177,12 +177,12 @@ public class VoteActivity extends AppCompatActivity
                 for(DataSnapshot snapshot : dataSnapshot.getChildren())
                 {
                     String name = snapshot.getKey()+"";
-                    Toast.makeText(VoteActivity.this, "Name is : "+name, Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(VoteActivity.this, "Name is : "+name, Toast.LENGTH_SHORT).show();
 
                     //디비 돌다가 선택한 Title 과 같으면 ,  해당 Title에 찬성한 인원 카운트
                     if(name.equals(arraylist_schedule.get(position).getTitle()) )
                     {
-                        Toast.makeText(VoteActivity.this,"Title match!!!", Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(VoteActivity.this,"Title match!!!", Toast.LENGTH_SHORT).show();
                         //해당 Title에 찬성한 인원 카운트
                         int agree_count = 0;
                         //투표한 사람의 인원
@@ -200,7 +200,7 @@ public class VoteActivity extends AppCompatActivity
                             }
                         }
 
-                        Toast.makeText(VoteActivity.this,"Agree count: " + agree_count, Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(VoteActivity.this,"Agree count: " + agree_count, Toast.LENGTH_SHORT).show();
                         //그룹의 멤버수와 찬성수 비교 전원 찬성시 그룹 일정으로 들어감.
                         if(agree_count == member_count)
                         {

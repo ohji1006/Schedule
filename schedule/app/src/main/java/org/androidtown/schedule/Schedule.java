@@ -18,6 +18,8 @@ public class Schedule implements Serializable
     private String title;
     private String uid;
     private String name;
+    private String hashkey;
+    private  Boolean is_private = false;
 
     public Schedule(){};
 
@@ -101,7 +103,23 @@ public class Schedule implements Serializable
         return body;
     }
 
+    public Boolean getIs_private() {
+        return is_private;
+    }
+
+    public void setIs_private(Boolean is_private) {
+        this.is_private = is_private;
+    }
+
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public String getHashkey() {
+        return hashkey;
+    }
+
+    public void setHashkey(String hashkey) {
+        this.hashkey = hashkey;
     }
 }

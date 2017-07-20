@@ -13,7 +13,7 @@
         <item
             android:id="@+id/nav_group_calendar"
             android:icon="@mipmap/ic_team_calendar"
-            android:title="@string/group_calendar" />
+            android:title="Team Calendar" />
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_menu_manage"

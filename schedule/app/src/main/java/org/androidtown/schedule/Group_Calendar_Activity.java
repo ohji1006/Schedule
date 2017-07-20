@@ -74,7 +74,7 @@ public class Group_Calendar_Activity extends AppCompatActivity implements Naviga
         gid = intent.getStringExtra("gid");
         uid = intent.getStringExtra("uid");
 
-        Toast.makeText(this, uid + ":::!!!!!!!!!!!!!!!!!::: " + gid, Toast.LENGTH_LONG).show();
+      //  Toast.makeText(this, uid + ":::!!!!!!!!!!!!!!!!!::: " + gid, Toast.LENGTH_LONG).show();
 
         setTitle(gid +" Calendar");
         materialCalendarView = (MaterialCalendarView) findViewById(R.id.group_calander);
@@ -135,7 +135,7 @@ public class Group_Calendar_Activity extends AppCompatActivity implements Naviga
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                Toast.makeText(Group_Calendar_Activity.this, "" + date.getYear() + ":" + date.getMonth() + ":" + date.getDay(), Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(Group_Calendar_Activity.this, "" + date.getYear() + ":" + date.getMonth() + ":" + date.getDay(), Toast.LENGTH_SHORT).show();
                 //테스트 하기위해
 
                 Intent selected_Day_Shedule_intent = new Intent(Group_Calendar_Activity.this, Group_Calendar_Selected_Day_Shedule_Activity.class);
@@ -306,8 +306,8 @@ public class Group_Calendar_Activity extends AppCompatActivity implements Naviga
                     shedule_title = shedule_title_edit.getText().toString();
                     shedule_body = shedule_body_edit.getText().toString();
 
-                    Toast toast2 = Toast.makeText(Group_Calendar_Activity.this, "title: " + shedule_title + ", body: " + shedule_body ,Toast.LENGTH_SHORT);
-                    toast2.show();
+               //     Toast toast2 = Toast.makeText(Group_Calendar_Activity.this, "title: " + shedule_title + ", body: " + shedule_body ,Toast.LENGTH_SHORT);
+                 //   toast2.show();
 
                     Schedule schedule = new Schedule(year,month, day, hour, minute ,shedule_title,shedule_body,uid,gid );//name대신 gid 넣음
                     databaseReference.child("Groups").child(gid).child("vote_Room").child(shedule_title).setValue(schedule);

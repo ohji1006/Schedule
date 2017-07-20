@@ -31,10 +31,10 @@ public class SecTempLoginActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "Here2", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "Here2", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.secactivity_temp_login);
 
-        Toast.makeText(this, "Here2", Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(this, "Here2", Toast.LENGTH_SHORT).show();
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null){
@@ -52,7 +52,7 @@ public class SecTempLoginActivity extends AppCompatActivity implements View.OnCl
 
         textViewSignin = (TextView) findViewById(R.id.textViewSignin);
 
-        Toast.makeText(this, "Here3", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(this, "Here3", Toast.LENGTH_SHORT).show();
 
         buttonSignup.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);
@@ -65,7 +65,7 @@ public class SecTempLoginActivity extends AppCompatActivity implements View.OnCl
 
         if(TextUtils.isEmpty(email)){
             //email is empty
-            Toast.makeText(this, "please enter email", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "please enter email", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
 
@@ -73,7 +73,7 @@ public class SecTempLoginActivity extends AppCompatActivity implements View.OnCl
         if(TextUtils.isEmpty(password)){
             //password is empty
 
-            Toast.makeText(this, "please enter Password", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, "please enter Password", Toast.LENGTH_SHORT).show();
 
             //stopping the function execution further
             return;
@@ -97,9 +97,9 @@ public class SecTempLoginActivity extends AppCompatActivity implements View.OnCl
 
                                 startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
 
-                            Toast.makeText(SecTempLoginActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(SecTempLoginActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(SecTempLoginActivity.this, "Could not register..please try again", Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(SecTempLoginActivity.this, "Could not register..please try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

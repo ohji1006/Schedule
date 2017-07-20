@@ -3,57 +3,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:gravity="center_horizontal"
+    android:id="@+id/inearLayout"
+    android:background="#80FF0000"
     android:orientation="vertical" android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" tools:context=".LoginActivity">
+
+    android:paddingTop="@dimen/activity_vertical_margin" tools:context=".LoginActivity2">
+
 
     <!-- Login progress -->
-    <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content" android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp" android:visibility="gone" />
+    <TextView
+
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+
+        android:layout_marginTop="0dp"
+
+        android:clickable="true"
+        android:text="Our Schedule"
+        android:textAppearance="?android:attr/textAppearanceMediumInverse"
+        android:textColor="@color/app_primary"
+        android:textSize="45dp"
+        android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/txt_descricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txt_logo"
+        android:layout_alignRight="@+id/txt_logo"
+        android:layout_below="@+id/txt_logo"
+        android:text="your scheduling app"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/grey_600" />
 
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="0dp">
+
 
         <LinearLayout
             android:id="@+id/ll_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="0dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                >
 
-                <TextView
-                    android:id="@+id/txt_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:clickable="true"
-                    android:text="Our Schedule"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@color/app_primary"
-                    android:textSize="45dp"
-                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/txt_descricao"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignEnd="@+id/txt_logo"
-                    android:layout_alignRight="@+id/txt_logo"
-                    android:layout_below="@+id/txt_logo"
-                    android:text="your scheduling app"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/grey_600" />
             </RelativeLayout>
 
             <LinearLayout
@@ -136,5 +144,9 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp" android:visibility="gone" />
 
 </LinearLayout>

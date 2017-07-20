@@ -16,7 +16,25 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="275dp"
+            android:layout_height="56dp"
+            android:orientation="horizontal"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/day7_go_myCalendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="My Calendar Day-7" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="189dp"
             android:orientation="horizontal">
 
             <ListView
@@ -29,23 +47,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="47dp"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/mycalandal_button"
+                android:id="@+id/day7_go_groupCalendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="not Yet" />
-
-            <Button
-                android:id="@+id/Group_Calendar_Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Group_Calendar" />
+                android:text="Team Calendar Day-7" />
         </LinearLayout>
 
         <LinearLayout
@@ -54,28 +64,10 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/test_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Go to Test" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/id_setting_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Setting" />
-
+            <ListView
+                android:id="@+id/group_7_schedule_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
     </LinearLayout>

@@ -3,9 +3,7 @@
 package org.androidtown.schedule;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -31,16 +28,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.prolificinteractive.materialcalendarview.CalendarDay;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 import static android.R.id.text1;
 
-public class SecondActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
-{
+public class SecondActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String uid;
     private String userName;
     private String gid;
@@ -55,19 +52,22 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
     private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     DrawerLayout drawer;
     NavigationView navigationView;
-    Toolbar toolbar=null;
+    Toolbar toolbar = null;
     private ArrayList<String> arrayList_gids;
     private ArrayList<Schedule> arrayList_schedules;
-    int listen_count =0;
+    private ArrayList<Schedule> arrayList_group_schedules;
+    int listen_count = 0;
     private ArrayAdapter<String> adapter;
-    private ListView     m_ListView;
-    private ListView day_7_listView;
-    private View  header;
+    private ArrayAdapter<String> group_adapter;
+    private ListView group_day_7_listView;
+    private ListView my_day_7_listView;
+    private View header;
     private TextView nav_header_text;
+    private Button go_to_mycalendar_Button;
+    private Button go_to_groupcalendar_Button;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
@@ -77,123 +77,122 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
         setSupportActionBar(toolbar);
 
         arrayList_gids = new ArrayList<String>();
+
         arrayList_schedules = new ArrayList<Schedule>();
+        arrayList_group_schedules = new ArrayList<Schedule>();
 
-        uid = user.getUid()+"";
-
+        uid = user.getUid() + "";
         userName = "user" + new Random().nextInt(10000);
 
 
         //파이어 베이스에 사용자 이름 넣었는지 검색. 없으면 자동 이름 설정. 있으면 기존 이름 사용.
-        databaseReference.child("Users").child(uid).child("name").addValueEventListener(new ValueEventListener()
-        {
+        databaseReference.child("Users").child(uid).child("name").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //넣기전에 초기화
-                if(dataSnapshot.getValue() == null)
-                {
+                if (dataSnapshot.getValue() == null) {
 
-                    databaseReference.child("Users").child(uid).child("name").setValue( userName );
-                }
-                else
-                {
-                    userName = dataSnapshot.getValue()+"";
+                    databaseReference.child("Users").child(uid).child("name").setValue(userName);
+                } else {
+                    userName = dataSnapshot.getValue() + "";
                 }
 
-                if(header == null) {
+                if (header == null) {
                     header = LayoutInflater.from(SecondActivity.this).inflate(R.layout.nav_header_second, null);
 
                     navigationView.addHeaderView(header);
                     nav_header_text = (TextView) header.findViewById(R.id.textView11);
                     nav_header_text.setText(userName);
-                }
-                else
-                {
+                } else {
                     nav_header_text.setText(userName);
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
 
-        myCalandal_button= (Button) findViewById(R.id.mycalandal_button);
-        test_button = (Button) findViewById(R.id.test_button);
-        id_setting_button= (Button) findViewById(R.id.id_setting_button);
-        group_Calandal_button = (Button) findViewById(R.id.Group_Calendar_Button);
-        day_7_listView = (ListView) findViewById(R.id.day_7_schedule_listview);
-
-        myCalandal_button.setText(uid);
+        my_day_7_listView = (ListView) findViewById(R.id.day_7_schedule_listview);
+        group_day_7_listView = (ListView) findViewById(R.id.group_7_schedule_listview);
+        go_to_mycalendar_Button = (Button) findViewById( R.id.day7_go_myCalendar) ;
+        go_to_groupcalendar_Button = (Button) findViewById( R.id.day7_go_groupCalendar) ;
 
         adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 text1);
-        day_7_listView.setAdapter( adapter);
+        group_adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1,
+                text1);
+        my_day_7_listView.setAdapter(adapter);
+        group_day_7_listView.setAdapter(group_adapter);
 
-
-        group_Calandal_button.setOnClickListener(new View.OnClickListener() {
+        go_to_mycalendar_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent m = new Intent(SecondActivity.this, My_Calendar_Activity.class);
+                startActivity(m);
 
-                if(gid != null) {
-                    Intent show_groups_activity_intent = new Intent(SecondActivity.this, Show_groups_Activity.class);
-                    show_groups_activity_intent.putExtra("uid", uid);
-                    //show_groups_activity_intent.putExtra("gid", gid);
-                    startActivity(show_groups_activity_intent);
-                }
             }
         });
-
-        myCalandal_button.setOnClickListener(new View.OnClickListener() {
+        go_to_groupcalendar_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent my_calendar_intent = new Intent(SecondActivity.this,My_Calendar_Activity.class); ;
-                my_calendar_intent.putExtra("id",uid);
-                startActivity(my_calendar_intent);
+                Intent g = new Intent(SecondActivity.this, Show_groups_Activity.class);
+                g.putExtra("uid", uid);
+                startActivity(g);
             }
         });
-        test_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //지움
-                Intent test_activity_intent = new Intent(SecondActivity.this,Test_Activity.class); ;
-                test_activity_intent.putExtra("id",uid);
-                startActivity(test_activity_intent);
-            }
-        });
-        id_setting_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent setting_activity_intent = new Intent(SecondActivity.this,SettingActivity.class);
-                setting_activity_intent.putExtra("id",uid);
-                startActivity(setting_activity_intent);
-            }
-        });
-
 
         // 유저 일정 다 받아오기.
-        databaseReference.child("Users").child(uid).child("schedule").addValueEventListener(new ValueEventListener()
-        {
+        databaseReference.child("Users").child(uid).child("schedule").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot)
-            {
-                arrayList_schedules.clear();
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 adapter.clear();
+                arrayList_schedules.clear();
+
                 //넣기전에 초기화
-                for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Schedule temp_schedule = snapshot.getValue(Schedule.class);
-
                     arrayList_schedules.add(temp_schedule);
-                    Toast.makeText(SecondActivity.this, "user uid schdule"+ snapshot.getValue(Schedule.class).getTitle(),Toast.LENGTH_SHORT).show();
-                  //  m_Adapter.add("user uid schdule"+ snapshot.getValue(Schedule.class).getTitle() );
-                    adapter.add( temp_schedule.getTitle()+" : " + temp_schedule.getBody() );
+                 //   Toast.makeText(SecondActivity.this, "user uid schdule" + snapshot.getValue(Schedule.class).getTitle(), Toast.LENGTH_SHORT).show();
                 }
-                listen_count = listen_count +1;
+                listen_count = listen_count + 1;
+                //유저와 그룹 모두 들으면 날짜 별로 정렬후 adapter연결
 
-                after_get_all_schedule_ascending();
+                AscendingObj ascending = new AscendingObj();
+                Collections.sort(arrayList_schedules, ascending);
+
+                //날자 정보 받아옴
+                GregorianCalendar gregorianCalendar = new GregorianCalendar();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+                String formated_date_String = dateFormat.format(gregorianCalendar.getTime());
+             //   Toast.makeText(SecondActivity.this, formated_date_String + " ", Toast.LENGTH_LONG).show();
+
+                // 지오메트리 정보 string 받은후  int 형태로 변환
+                String string_dates[] = new String[3];
+                string_dates[0] = formated_date_String.substring(0, 4);
+                string_dates[1] = formated_date_String.substring(5, 7);
+                string_dates[2] = formated_date_String.substring(8);
+                int int_dates[] = new int[3];
+                for (int i = 0; i < string_dates.length; i++) {
+                    int_dates[i] = Integer.parseInt(string_dates[i]);
+                }
+                int_dates[1] = int_dates[1] - 1;
+
+
+               // Toast.makeText(SecondActivity.this, "NOW!! Year: " + int_dates[0] + " month: " + int_dates[1] + " day: " + int_dates[2], Toast.LENGTH_LONG).show();
+
+                for (Schedule schedules : arrayList_schedules)
+                {
+                  //  Toast.makeText(SecondActivity.this, "User Schedule Year: " + schedules.getYear() + " month: " + schedules.getMounth() + " day: " + schedules.getDay(), Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(SecondActivity.this, "NOW!! Year:         " + int_dates[0] + " month: " + int_dates[1] + " day: " + int_dates[2], Toast.LENGTH_LONG).show();
+                    if (int_dates[0] == schedules.getYear() && int_dates[1] == schedules.getMounth() && (int_dates[2] <= schedules.getDay() && int_dates[2] >= schedules.getDay() - 7))
+                        adapter.add("Title : " + schedules.getTitle() + "                   Date: " + schedules.getDay()+ "."+schedules.getMounth()+ "."+schedules.getYear());
+                }
+
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
@@ -202,53 +201,80 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
         //모든 그룹 gid 받아오기.
         databaseReference.child("Users").child(uid).child("groups").addValueEventListener(new ValueEventListener()
         {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
-                {
-                    arrayList_gids.clear();
-                    //넣기전에 초기화
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren())
-                    {
-                        gid = snapshot.getKey()+"";
-                        arrayList_gids.add(gid);
-                        Toast.makeText(getApplicationContext(), "get gid : "+ gid ,Toast.LENGTH_SHORT).show();
-                    }
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                arrayList_gids.clear();
+                //넣기전에 초기화
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    gid = snapshot.getKey() + "";
+                    arrayList_gids.add(gid);
+                   // Toast.makeText(getApplicationContext(), "get gid : " + gid, Toast.LENGTH_SHORT).show();
+                }
 
-                    //속한 그룹마다 스케쥴 가져온다.
-                    for(int i =0; i< arrayList_gids.size() ; i++)
-                    {
-                        databaseReference.child("Groups").child(arrayList_gids.get(i)).child("schedule").addListenerForSingleValueEvent(new ValueEventListener()
+                //속한 그룹마다 스케쥴 가져온다.
+                for (int i = 0; i < arrayList_gids.size(); i++)
+                {
+                    databaseReference.child("Groups").child(arrayList_gids.get(i)).child("schedule").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot)
                         {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot)
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren())
                             {
-                                for(DataSnapshot snapshot: dataSnapshot.getChildren())
-                                {
-                                    Schedule group_temp_schedule = snapshot.getValue(Schedule.class);  // schedule 데이터를 가져오고
-                                    if(group_temp_schedule == null)
-                                    {
-                                        break;
-                                    }
-                                    arrayList_schedules.add(group_temp_schedule);
+                                Schedule group_temp_schedule = snapshot.getValue(Schedule.class);  // schedule 데이터를 가져오고
+                                if (group_temp_schedule == null) {
+                                    break;
                                 }
-                                listen_count = listen_count +1;
-
-                                after_get_all_schedule_ascending();
+                                arrayList_group_schedules.add(group_temp_schedule);
                             }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError)
-                            {
+                            listen_count = listen_count + 1;
 
+                            //유저와 그룹 모두 들으면 날짜 별로 정렬후 adapter연결
+                            if (listen_count == arrayList_gids.size() + 1) {
+                                AscendingObj ascending = new AscendingObj();
+                                Collections.sort(arrayList_group_schedules, ascending);
+
+
+                                //날자 정보 받아옴
+                                GregorianCalendar gregorianCalendar = new GregorianCalendar();
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+                                String formated_date_String = dateFormat.format(gregorianCalendar.getTime());
+                             //   Toast.makeText(SecondActivity.this, formated_date_String + " ", Toast.LENGTH_LONG).show();
+
+                                // 지오메트리 정보 string 받은후  int 형태로 변환
+                                String string_dates[] = new String[3];
+                                string_dates[0] = formated_date_String.substring(0, 4);
+                                string_dates[1] = formated_date_String.substring(5, 7);
+                                string_dates[2] = formated_date_String.substring(8);
+                                int int_dates[] = new int[3];
+                                for (int i = 0; i < string_dates.length; i++) {
+                                    int_dates[i] = Integer.parseInt(string_dates[i]);
+                                }
+                                int_dates[1] = int_dates[1] - 1;
+
+
+                             //   Toast.makeText(SecondActivity.this, "NOW!! Year: " + int_dates[0] + " month: " + int_dates[1] + " day: " + int_dates[2], Toast.LENGTH_LONG).show();
+
+                                for (Schedule schedules : arrayList_group_schedules) {
+                             //       Toast.makeText(SecondActivity.this, "Schedule Year: " + schedules.getYear() + " month: " + schedules.getMounth() + " day: " + schedules.getDay(), Toast.LENGTH_LONG).show();
+
+                                    if (int_dates[0] == schedules.getYear() && int_dates[1] == schedules.getMounth() && (int_dates[2] <= schedules.getDay() && int_dates[2] >= schedules.getDay() - 7))
+                                        group_adapter.add("Title : " + schedules.getTitle() + "                   Date: " + schedules.getDay()+ "."+schedules.getMounth()+ "."+schedules.getYear());
+                                }
                             }
-                        });
-                    }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
-                @Override
-                public void onCancelled(DatabaseError databaseError)
-                {
-                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
-
 
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -262,18 +288,16 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
     }
 
 
-    public void after_get_all_schedule_ascending()
-    {
-       // if(listen_count+1 == arrayList_gids.size())
-       // {
-            AscendingObj ascending = new AscendingObj();
-            Collections.sort( arrayList_schedules, ascending);
+    public void after_get_all_schedule_ascending() {
+        // if(listen_count+1 == arrayList_gids.size())
+        // {
+        AscendingObj ascending = new AscendingObj();
+        Collections.sort(arrayList_schedules, ascending);
 
-            for(Schedule schedules :arrayList_schedules )
-            {
-                adapter.add(schedules.getTitle()+" : " + schedules.getBody() );
-            }
-    //    }
+        for (Schedule schedules : arrayList_schedules) {
+            adapter.add(schedules.getTitle() + " : " + schedules.getBody());
+        }
+        //    }
     }
 
     @Override
@@ -301,8 +325,7 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
+        if (id == R.id.action_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -310,28 +333,27 @@ public class SecondActivity extends AppCompatActivity implements NavigationView.
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
+    public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
 
             case R.id.nav_home:
-                Intent h = new Intent(SecondActivity.this , SecondActivity.class);
+                Intent h = new Intent(SecondActivity.this, SecondActivity.class);
                 startActivity(h);
                 break;
             case R.id.nav_my_calendar:
-                Intent m = new Intent(SecondActivity.this , My_Calendar_Activity.class);
+                Intent m = new Intent(SecondActivity.this, My_Calendar_Activity.class);
                 startActivity(m);
                 break;
             case R.id.nav_group_calendar:
-                Intent g = new Intent(SecondActivity.this , Show_groups_Activity.class);
+                Intent g = new Intent(SecondActivity.this, Show_groups_Activity.class);
                 g.putExtra("uid", uid);
                 startActivity(g);
                 break;
             case R.id.nav_setting:
-                Intent s = new Intent(SecondActivity.this ,SettingActivity.class);
+                Intent s = new Intent(SecondActivity.this, SettingActivity.class);
                 s.putExtra("uid", uid);
                 startActivity(s);
                 break;

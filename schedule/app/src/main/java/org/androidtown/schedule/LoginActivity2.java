@@ -25,6 +25,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,6 +96,8 @@ public class LoginActivity2 extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
 
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.inearLayout);
+        linearLayout.setBackgroundResource(R.drawable.six);
 
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() != null){
@@ -468,7 +471,7 @@ public class LoginActivity2 extends AppCompatActivity implements
                 //Intent intent = new Intent(LoginActivity2.this, SecTempLoginActivity.class);
                 //intent.putExtra(Constants.TAG_EMAIL, email);
                 //startActivity(intent);
-                Toast.makeText(this, "Here", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(this, "Here", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(this, RegisterActivity.class));
                 //finish();
                 break;

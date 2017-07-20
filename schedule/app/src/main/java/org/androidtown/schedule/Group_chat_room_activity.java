@@ -84,7 +84,7 @@ public class Group_chat_room_activity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 userName = dataSnapshot.getValue()+"";
-                Toast.makeText(Group_chat_room_activity.this, "userName is ::::" + userName,Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(Group_chat_room_activity.this, "userName is ::::" + userName,Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

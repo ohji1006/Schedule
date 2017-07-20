@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.inearLayout);
+        linearLayout.setBackgroundResource(R.drawable.six);
 
         String email;
         if (savedInstanceState == null) {
@@ -134,7 +138,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if(TextUtils.isEmpty(email)){
             //email is empty
-            Toast.makeText(this, "please enter email", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, "please enter email", Toast.LENGTH_SHORT).show();
             //stopping the function execution further
             return;
 
@@ -142,7 +146,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         if(TextUtils.isEmpty(password)){
             //password is empty
 
-            Toast.makeText(this, "please enter Password", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, "please enter Password", Toast.LENGTH_SHORT).show();
 
             //stopping the function execution further
             return;
@@ -228,11 +232,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if (checkNetwork.isConnected(RegisterActivity.this) && success) {
 
                 userCreate();
-                Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
 
 
             } else {
-                Toast.makeText(RegisterActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
+            //    Toast.makeText(RegisterActivity.this, "Network Error", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -264,9 +268,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                             startActivity(new Intent(getApplicationContext(),LoginActivity2.class));
                             finish();
 
-                            Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                       //     Toast.makeText(RegisterActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(RegisterActivity.this, "Could not register..please try again", Toast.LENGTH_SHORT).show();
+                       //     Toast.makeText(RegisterActivity.this, "Could not register..please try again", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

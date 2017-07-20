@@ -119,7 +119,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
         //    UID = user.getUid()+"";
         databaseReference.child("Users").child(user.getUid()).setValue(userInformation);
 
-        Toast.makeText(this, "정보 저장완료", Toast.LENGTH_LONG).show();
+     //   Toast.makeText(this, "정보 저장완료", Toast.LENGTH_LONG).show();
     }
 
     private DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
@@ -130,8 +130,8 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
             month = temp_monthOfYear;
             day = temp_dayOfMonth;
 
-            Toast toast = Toast.makeText(SettingActivity.this, "year: " + year+ ", month: " + month+ " , day: "+ day,Toast.LENGTH_SHORT);
-            toast.show();
+           // Toast toast = Toast.makeText(SettingActivity.this, "year: " + year+ ", month: " + month+ " , day: "+ day,Toast.LENGTH_SHORT).show();
+
 
 
 
@@ -158,8 +158,8 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
                     shedule_title = shedule_title_edit.getText().toString();
                     shedule_body = shedule_body_edit.getText().toString();
 
-                    Toast toast2 = Toast.makeText(SettingActivity.this,"title: " + shedule_title + ", body: " + shedule_body ,Toast.LENGTH_SHORT);
-                    toast2.show();
+          //          Toast toast2 = Toast.makeText(SettingActivity.this,"title: " + shedule_title + ", body: " + shedule_body ,Toast.LENGTH_SHORT);
+           //         toast2.show();
 
                     Schedule schedule = new Schedule(year,month, day, hour, minute ,shedule_title,shedule_body,"dssd","dsf" );
                   //  Schedule(int year, int mounth, int day, int hour, int minute, String title, String body)
