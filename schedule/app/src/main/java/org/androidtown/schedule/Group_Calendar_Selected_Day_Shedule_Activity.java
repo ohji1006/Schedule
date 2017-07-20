@@ -17,9 +17,9 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Group_Calendar_Selected_Day_Shedule_Activity extends AppCompatActivity{
-    private int year;
-    private int mouth;
-    private int day;
+    private int Tyear;
+    private int Tmonth;
+    private int Tday;
     private String uid;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -36,18 +36,17 @@ public class Group_Calendar_Selected_Day_Shedule_Activity extends AppCompatActiv
         Intent intent = getIntent();
         schedule_ArrayList =(ArrayList<Schedule>) getIntent().getSerializableExtra("schedule_ArrayList");
         uid = intent.getStringExtra("uid");
-        year = intent.getIntExtra("year",0);
-        mouth = intent.getIntExtra("month",0);
-        day =intent.getIntExtra("day",0);
+        Tyear = intent.getIntExtra("year",0);
+        Tmonth = intent.getIntExtra("month",0) + 1;
+        Tday =intent.getIntExtra("day",0);
         //달력에서 년 월 일 받아옴
-        int temp_mouth = mouth+1;
 
-        setTitle(year+ " 년 "+ temp_mouth+ " 월 " + day + " 일 ");
+        setTitle(Tyear+ " 년 "+ Tmonth+ " 월 " + Tday + " 일 ");
 
-        Toast.makeText(this, uid + " :: " + year+": " + mouth+ " : "+ day,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, uid + " :: " + Tyear+": " + Tmonth+ " : "+ Tday,Toast.LENGTH_SHORT).show();
         // 제대로 받아 온지 테스트
 
-        adapter = new ScheduleViewAdapter();
+        adapter = new ScheduleViewAdapter(true);
         // 어댑터 설정
 
         listView.setAdapter( adapter);
@@ -60,7 +59,7 @@ public class Group_Calendar_Selected_Day_Shedule_Activity extends AppCompatActiv
                 Intent show_schedule_intent = new Intent(Group_Calendar_Selected_Day_Shedule_Activity.this, Show_schedule_activity.class);
 
                 //리스트 뷰 클릭시 해당 스케쥴 상세 보임 액티비티로 이동
-                show_schedule_intent.putExtra("schedule", schedule_ArrayList.get(position) );
+                show_schedule_intent.putExtra("schedule", (Schedule) adapter.getItem(position) );
                 startActivity(show_schedule_intent);
             }
         });
@@ -73,18 +72,9 @@ public class Group_Calendar_Selected_Day_Shedule_Activity extends AppCompatActiv
         //for문으로 해당 날자에 맞는 스케쥴만 adapter를 통해 게시
         for(Schedule schedules :schedule_ArrayList )
         {
-            int temp_year=schedules.getYear();
-            int temp_mount= schedules.getMounth();
-            int temp_day = schedules.getDay();
-            int temp_hour = schedules.getHour();
-            int temp_minute = schedules.getMinute();
-            String temp_name = schedules.getName();
-            //TTest
-            if(temp_year== year && temp_mount== mouth && temp_day== day)
-            {
-                temp_mount = temp_mount+1;
+            if( schedules.getYear() == Tyear && schedules.getMounth() == Tmonth - 1 && schedules.getDay() == Tday)
                 adapter.addItem(schedules);
-            }
         }
     }
 }
+

@@ -1,11 +1,17 @@
 package org.androidtown.schedule;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.icu.util.Calendar;
+import java.util.Calendar;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +44,7 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -47,6 +54,7 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
     private MaterialCalendarView materialCalendarView;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
+    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private String uid,name;
     private FloatingActionButton floatingActionButton1;
     private int year, month, day, hour, minute;
@@ -55,7 +63,11 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
     private AlertDialog.Builder buider;
     private String shedule_title;
     private String shedule_body;
-    private FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private Intent alarm_intent;
+    private PendingIntent ServicePending;
+    private AlarmManager AM;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,8 +76,9 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
         setContentView(R.layout.activity_my__calendar_);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -219,9 +232,55 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
                     Toast toast2 = Toast.makeText(My_Calendar_Activity.this, "title: " + shedule_title + ", body: " + shedule_body ,Toast.LENGTH_SHORT);
                     toast2.show();
 
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            My_Calendar_Activity.this);
+                    alertDialogBuilder.setMessage("알람을 등록할 것입니까?").setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i)
+                                {
+                                    AM = (AlarmManager) getSystemService(ALARM_SERVICE);
+                                    alarm_intent= new Intent(My_Calendar_Activity.this, AlarmReceiver.class);
+                                    alarm_intent.putExtra("shedule_title",shedule_title);
+                                    alarm_intent.putExtra("hour",hour);
+                                    alarm_intent.putExtra("minute",minute);
+
+                                    ServicePending = PendingIntent.getBroadcast(
+                                            My_Calendar_Activity.this, 0, alarm_intent, 0);
+                                    //현재 시간보다 3초뒤에 pendingIntent를 실행
+                                    Date t = new Date();
+                                    t.setTime(System.currentTimeMillis() + 5 * 1000);
+
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.set(Calendar.YEAR, year);
+                                    calendar.set(Calendar.MONTH, month);
+                                    calendar.set(Calendar.DATE, day);
+                                    calendar.set(Calendar.HOUR_OF_DAY, hour);
+                                    calendar.set(Calendar.MINUTE, minute);
+                                    calendar.set(Calendar.SECOND, 0);
+                                    calendar.set(Calendar.MILLISECOND, 0);
+
+
+                                 //   AM.set(AlarmManager.RTC_WAKEUP, t.getTime(), ServicePending);
+                                    AM.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), ServicePending);
+
+                                    Toast.makeText(getBaseContext(), "5초뒤에 알람", Toast.LENGTH_SHORT).show();
+
+                                    push_schedule_to_firebase(year,month, day, hour, minute ,shedule_title,shedule_body,uid,name);
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    push_schedule_to_firebase(year,month, day, hour, minute ,shedule_title,shedule_body,uid,name);
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+
                   //  Schedule schedule = new Schedule(shedule_body, year,month, day);
-                    Schedule schedule = new Schedule(year,month, day, hour, minute ,shedule_title,shedule_body,uid,name );
-                    databaseReference.child("Users").child(uid).child("schedule").push().setValue(schedule);
+                  //  Schedule schedule = new Schedule(year,month, day, hour, minute ,shedule_title,shedule_body,uid,name );
+                  //  databaseReference.child("Users").child(uid).child("schedule").push().setValue(schedule);
                 }
             });
             buider.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -234,6 +293,13 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
             dialog.show();
         }
     };
+
+    public void push_schedule_to_firebase(int year, int mounth, int day, int hour, int minute, String title, String body, String uid, String name)
+    {
+        Schedule schedule = new Schedule(year,month, day, hour, minute ,shedule_title,shedule_body,uid,name );
+        databaseReference.child("Users").child(uid).child("schedule").push().setValue(schedule);
+
+    }
 
 
     @Override
@@ -297,12 +363,11 @@ public class My_Calendar_Activity extends AppCompatActivity implements Navigatio
             case R.id.nav_logout:
                 firebaseAuth.signOut();
                 finish();
-                startActivity(new Intent(My_Calendar_Activity.this, LoginActivity.class));
+                startActivity(new Intent(My_Calendar_Activity.this, LoginActivity2.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

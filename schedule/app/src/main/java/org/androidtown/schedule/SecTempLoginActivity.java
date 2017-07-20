@@ -31,15 +31,16 @@ public class SecTempLoginActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(this, "Here2", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.secactivity_temp_login);
 
-
+        Toast.makeText(this, "Here2", Toast.LENGTH_SHORT).show();
         firebaseAuth = FirebaseAuth.getInstance();
 
         if(firebaseAuth.getCurrentUser() != null){
             //profile activity here
             finish();
-            startActivity(new Intent(getApplicationContext(),ProfileActivity.class));
+            startActivity(new Intent(getApplicationContext(),SettingActivity.class));
         }
 
         progressDialog = new ProgressDialog(this);
@@ -51,7 +52,7 @@ public class SecTempLoginActivity extends AppCompatActivity implements View.OnCl
 
         textViewSignin = (TextView) findViewById(R.id.textViewSignin);
 
-
+        Toast.makeText(this, "Here3", Toast.LENGTH_SHORT).show();
 
         buttonSignup.setOnClickListener(this);
         textViewSignin.setOnClickListener(this);

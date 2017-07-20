@@ -15,9 +15,11 @@ import java.util.ArrayList;
 
 public class ScheduleViewAdapter extends BaseAdapter {
     private ArrayList<Schedule> ScheduleViewItemList = new ArrayList<Schedule>();
-
+    private boolean is_group = false;
     public ScheduleViewAdapter(){}
-
+    public ScheduleViewAdapter(boolean groupflag){
+        is_group = groupflag;
+    }
     @Override
     public int getCount(){
         return ScheduleViewItemList.size();
@@ -30,7 +32,10 @@ public class ScheduleViewAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.schedule_item, parent, false);
+            if( is_group)
+                convertView = inflater.inflate(R.layout.group_schedule_item, parent, false);
+            else
+                convertView = inflater.inflate(R.layout.schedule_item, parent, false);
         }
 
         TextView nameTextView = (TextView) convertView.findViewById(R.id.sch_name);
@@ -44,6 +49,11 @@ public class ScheduleViewAdapter extends BaseAdapter {
         nameTextView.setText( schedule.getTitle());
         descTextView.setText( "   " + schedule.getBody());
         // stdayTextView.setText("   "+ schedule.getDay() + ". " + schedule.getMounth() + ". " + schedule.getYear());
+
+        if( is_group) {
+            TextView userTextView = (TextView) convertView.findViewById(R.id.sch_user);
+            userTextView.setText( " " + schedule.getName());
+        }
 
         String timestr = "   " + schedule.getHour() + " : " + schedule.getMinute();
         if( schedule.getMinute() == 0) timestr += "0";

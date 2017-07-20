@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 어두워져 있을 때 ( 잠금상태 일 때 ) 화면을 깨울때 주는 권한이다. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -16,13 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".LoginActivity"></activity>
         <activity
             android:name=".SecondActivity"
             android:label="@string/title_activity_temp_login"
@@ -31,17 +27,21 @@
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_temp_login" />
-        <activity android:name=".VoteActivity"
-           android:label="Long Click to Vote!"/>
+        <activity
+            android:name=".VoteActivity"
+            android:label="Long Click to Vote!" />
         <activity android:name=".Test_Activity" />
         <activity android:name=".My_Calendar_Selected_Day_Shedule" />
-
-        <activity android:name=".Show_schedule_activity" />
+        <activity
+            android:name=".Show_schedule_activity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" />
         <activity android:name=".Group_Calendar_Selected_Day_Shedule_Activity" />
-        <activity android:name=".Show_groups_Activity"
-            android:label="Group List"/>
-        <activity android:name=".Show_schedule_activity" />
-        <activity android:name=".Group_chat_room_activity"></activity>
+        <activity
+            android:name=".Show_groups_Activity"
+            android:label="Group List" />
+        <activity android:name=".Group_chat_room_activity" />
         <activity
             android:name=".SettingActivity"
             android:label="@string/Setting"
@@ -49,11 +49,23 @@
         <activity
             android:name=".My_Calendar_Activity"
             android:label="@string/My_calendar"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".Group_Calendar_Activity"
             android:label="@string/Group_calendar"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver android:name=".AlarmReceiver" />
+
+        <activity android:name=".LoginActivity2">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

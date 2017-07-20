@@ -240,7 +240,7 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_logout:
                 firebaseAuth.signOut();
                 finish();
-                startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                startActivity(new Intent(SettingActivity.this, LoginActivity2.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

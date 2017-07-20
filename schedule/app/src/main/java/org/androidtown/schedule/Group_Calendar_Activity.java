@@ -165,7 +165,7 @@ public class Group_Calendar_Activity extends AppCompatActivity implements Naviga
 
                 for(int i =0; i< group_members_uids.size(); i++)
                 {
-                  //  Toast.makeText(Group_Calendar_Activity.this, "group_members_uids: " + group_members_uids.get(i), Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(Group_Calendar_Activity.this, "group_members_uids: " + group_members_uids.get(i), Toast.LENGTH_SHORT).show();
 
                     databaseReference.child("Users").child(group_members_uids.get(i)).child("schedule").addListenerForSingleValueEvent(new ValueEventListener()
                     {
@@ -197,26 +197,26 @@ public class Group_Calendar_Activity extends AppCompatActivity implements Naviga
                                 //사람 수랑 받은 데이터 수가 일치할때 그린다.
                                 for(int i = 0; i< array_hash_set.size() ; i++)
                                 {
-                                 //    Toast.makeText(Group_Calendar_Activity.this, "i : "+ i +": "+array_hash_set.size() + " : " + group_members_uids.size(),Toast.LENGTH_LONG).show();
-                                     //저장된 날자들로 점을 그린다!.
-                                     switch (i)
-                                     {
-                                         case 0:
-                                             materialCalendarView.addDecorator(new MyCustomDecorator(Color.RED, 1, array_hash_set.get(0)));
-                                             break;
-                                         case 1:
-                                             materialCalendarView.addDecorator(new MyCustomDecorator(Color.BLUE, 2,  array_hash_set.get(1)));
-                                             break;
-                                         case 2:
-                                             materialCalendarView.addDecorator(new MyCustomDecorator(Color.GREEN, 3,  array_hash_set.get(2)));
-                                             break;
-                                         case 3:
-                                             materialCalendarView.addDecorator(new MyCustomDecorator(Color.YELLOW, 4,  array_hash_set.get(3)));
-                                             break;
-                                         case 4:
-                                             materialCalendarView.addDecorator(new MyCustomDecorator(Color.MAGENTA, 5,  array_hash_set.get(4)));
-                                     }
-                                 }
+                                    //    Toast.makeText(Group_Calendar_Activity.this, "i : "+ i +": "+array_hash_set.size() + " : " + group_members_uids.size(),Toast.LENGTH_LONG).show();
+                                    //저장된 날자들로 점을 그린다!.
+                                    switch (i)
+                                    {
+                                        case 0:
+                                            materialCalendarView.addDecorator(new MyCustomDecorator(Color.RED, 1, array_hash_set.get(0)));
+                                            break;
+                                        case 1:
+                                            materialCalendarView.addDecorator(new MyCustomDecorator(Color.BLUE, 2,  array_hash_set.get(1)));
+                                            break;
+                                        case 2:
+                                            materialCalendarView.addDecorator(new MyCustomDecorator(Color.GREEN, 3,  array_hash_set.get(2)));
+                                            break;
+                                        case 3:
+                                            materialCalendarView.addDecorator(new MyCustomDecorator(Color.YELLOW, 4,  array_hash_set.get(3)));
+                                            break;
+                                        case 4:
+                                            materialCalendarView.addDecorator(new MyCustomDecorator(Color.MAGENTA, 5,  array_hash_set.get(4)));
+                                    }
+                                }
                             }
                         }
                         @Override
@@ -377,14 +377,14 @@ public class Group_Calendar_Activity extends AppCompatActivity implements Naviga
                 startActivity(g);
                 break;
             case R.id.nav_setting:
-                Intent s = new Intent(Group_Calendar_Activity.this, SettingActivity.class);
+                Intent s = new Intent(Group_Calendar_Activity.this, ProfileActivity.class);
                 s.putExtra("uid", uid);
                 startActivity(s);
                 break;
             case R.id.nav_logout:
                 firebaseAuth.signOut();
                 finish();
-                startActivity(new Intent(Group_Calendar_Activity.this, LoginActivity.class));
+                startActivity(new Intent(Group_Calendar_Activity.this, LoginActivity2.class));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
